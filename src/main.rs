@@ -18,9 +18,13 @@ fn parse_str_to_i32(str: &str) -> Vec<i32> {
     parsed_str
 }
 
-fn get_skyscraper_rules() -> Vec<i32> {
+fn get_skyscraper_rules() -> Result<Vec<i32>, String> {
     let args: Vec<String> = env::args().collect();
-    parse_str_to_i32(&args[1])
+    if args.len() == 2 {
+        Ok(parse_str_to_i32(&args[1]))
+    } else {
+        Err("Invalid number of arguments".to_string())
+    }
 }
 
 fn get_skyscraper_grid() -> Vec<i32> {
@@ -172,7 +176,7 @@ fn check_grid(skyscraper_rules: &[i32], skyscraper_grid: &[i32]) -> Result<(), S
 }
 
 fn main() -> Result<(), String> {
-    let skyscraper_rules = get_skyscraper_rules();
+    let skyscraper_rules = get_skyscraper_rules()?;
     check_rules(&skyscraper_rules)?;
     let skyscraper_grid = get_skyscraper_grid();
     check_grid(&skyscraper_rules, &skyscraper_grid)?;
