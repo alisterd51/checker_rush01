@@ -1,6 +1,10 @@
-use std::{env, io::{self, Read}, process::exit};
+use std::{
+    env,
+    io::{self, Read},
+    process::exit,
+};
 
-fn parse_str_to_i32(str: &String) -> Vec<i32> {
+fn parse_str_to_i32(str: &str) -> Vec<i32> {
     let mut parsed_str = vec![];
     for word in str.split_whitespace() {
         parsed_str.push(word.parse().unwrap());
@@ -19,14 +23,14 @@ fn get_skyscraper_grid() -> Vec<i32> {
     parse_str_to_i32(&buf)
 }
 
-fn check_rules(skyscraper_rules: &Vec<i32>) {
+fn check_rules(skyscraper_rules: &[i32]) {
     if skyscraper_rules.len() % 4 != 0 {
         println!("invalid rules");
         exit(1);
     }
 }
 
-fn check_grid(skyscraper_rules: &Vec<i32>, skyscraper_grid: &Vec<i32>) {
+fn check_grid(skyscraper_rules: &[i32], skyscraper_grid: &[i32]) {
     if (skyscraper_rules.len() / 4) * (skyscraper_rules.len() / 4) != skyscraper_grid.len() {
         println!("invalid grid");
         exit(1);
@@ -38,4 +42,15 @@ fn main() {
     check_rules(&skyscraper_rules);
     let skyscraper_grid = get_skyscraper_grid();
     check_grid(&skyscraper_rules, &skyscraper_grid);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_str_to_i32() {
+        assert_eq!(parse_str_to_i32(&String::from("1 2 3")), vec![1, 2, 3]);
+        assert_eq!(parse_str_to_i32(&String::from("")), vec![]);
+    }
 }
