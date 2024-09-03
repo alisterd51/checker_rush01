@@ -77,6 +77,29 @@ fn get_skyscraper_line(
     skyscraper_line
 }
 
+fn validate_line(skyscraper_line: &[i32]) -> Result<(), String> {
+    let mut copy_line = Vec::from(skyscraper_line);
+
+    copy_line.dedup();
+    if copy_line.len() != skyscraper_line.len() {
+        return Err("Skyscraper line contain duplicate value".to_string());
+    }
+
+    let line_len = i32::try_from(skyscraper_line.len());
+
+    match line_len {
+        Ok(line_len) => {
+            for skyscraper in skyscraper_line {
+                if *skyscraper <= 0 || *skyscraper > line_len {
+                    return Err("Invalid skyscraper value".to_string());
+                }
+            }
+            Ok(())
+        }
+        Err(_) => Err("Invalid line size".to_string()),
+    }
+}
+
 fn check_line(rule: i32, skyscraper_line: &[i32]) -> Result<(), String> {
     let mut count_skyscraper = 0;
     let mut max_skyscraper_size = 0;
@@ -142,6 +165,7 @@ fn check_grid(skyscraper_rules: &[i32], skyscraper_grid: &[i32]) -> Result<(), S
     }
     for (i, rule) in skyscraper_rules.iter().enumerate() {
         let line = choice_skyscraper_line(i, grid_len, skyscraper_grid)?;
+        validate_line(&line)?;
         check_line(*rule, &line)?;
     }
     Ok(())
@@ -283,6 +307,16 @@ mod tests {
 
         let rules = vec![1, 2, 3, 4];
         let grid = vec![1];
+
+        assert!(check_grid(&rules, &grid).is_err());
+
+        let rules = vec![1, 1, 1, 1];
+        let grid = vec![2];
+
+        assert!(check_grid(&rules, &grid).is_err());
+
+        let rules = vec![1, 1, 1, 1, 1, 1, 1, 1];
+        let grid = vec![2, 2, 2, 2];
 
         assert!(check_grid(&rules, &grid).is_err());
     }
