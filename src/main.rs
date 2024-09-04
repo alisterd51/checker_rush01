@@ -127,37 +127,37 @@ fn choice_skyscraper_line(
     i: usize,
     grid_len: usize,
     skyscraper_grid: &[i32],
-) -> Result<Vec<i32>, &str> {
+) -> Result<Vec<i32>, String> {
     if i < grid_len {
         Ok(get_skyscraper_line(
             &Direction::Up,
-            i % 4,
+            i % grid_len,
             grid_len,
             skyscraper_grid,
         ))
     } else if i < 2 * grid_len {
         Ok(get_skyscraper_line(
             &Direction::Down,
-            (i - grid_len) % 4,
+            (i - grid_len) % grid_len,
             grid_len,
             skyscraper_grid,
         ))
     } else if i < 3 * grid_len {
         Ok(get_skyscraper_line(
             &Direction::Left,
-            (i - 2 * grid_len) % 4,
+            (i - 2 * grid_len) % grid_len,
             grid_len,
             skyscraper_grid,
         ))
     } else if i < 4 * grid_len {
         Ok(get_skyscraper_line(
             &Direction::Right,
-            (i - 3 * grid_len) % 4,
+            (i - 3 * grid_len) % grid_len,
             grid_len,
             skyscraper_grid,
         ))
     } else {
-        Err("Internal Error: invalid index")
+        Err("Internal Error: invalid index".to_string())
     }
 }
 
@@ -295,6 +295,12 @@ mod tests {
         assert_eq!(choice_skyscraper_line(6, 2, &grid), Ok(vec![2, 1]));
         assert_eq!(choice_skyscraper_line(7, 2, &grid), Ok(vec![1, 2]));
         assert!(choice_skyscraper_line(8, 2, &grid).is_err());
+
+        let grid = vec![
+            1, 3, 5, 4, 2, 3, 5, 4, 2, 1, 2, 4, 1, 5, 3, 5, 2, 3, 1, 4, 4, 1, 2, 3, 5,
+        ];
+
+        assert_eq!(choice_skyscraper_line(0, 5, &grid), Ok(vec![1, 3, 2, 5, 4]));
     }
 
     #[test]
@@ -306,6 +312,13 @@ mod tests {
 
         let rules = vec![2, 1, 1, 2, 2, 1, 1, 2];
         let grid = vec![1, 2, 2, 1];
+
+        assert!(check_grid(&rules, &grid).is_ok());
+
+        let rules = vec![3, 2, 1, 2, 4, 2, 4, 4, 2, 1, 3, 2, 3, 1, 2, 3, 4, 2, 2, 1];
+        let grid = vec![
+            1, 3, 5, 4, 2, 3, 5, 4, 2, 1, 2, 4, 1, 5, 3, 5, 2, 3, 1, 4, 4, 1, 2, 3, 5,
+        ];
 
         assert!(check_grid(&rules, &grid).is_ok());
 
