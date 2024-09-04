@@ -1,6 +1,6 @@
 [package]
 name = "checker_rush01"
-version = "1.0.1"
+version = "1.0.2"
 edition = "2021"
 
 [dependencies]
