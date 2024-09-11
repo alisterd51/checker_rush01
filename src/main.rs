@@ -12,6 +12,7 @@ enum Direction {
 
 fn parse_str_to_i32(str: &str) -> Vec<i32> {
     let mut parsed_str = vec![];
+
     for word in str.split_whitespace() {
         parsed_str.push(word.parse().unwrap());
     }
@@ -20,6 +21,7 @@ fn parse_str_to_i32(str: &str) -> Vec<i32> {
 
 fn get_skyscraper_rules() -> Result<Vec<i32>, String> {
     let args: Vec<String> = env::args().collect();
+
     if args.len() == 2 {
         Ok(parse_str_to_i32(&args[1]))
     } else {
@@ -30,14 +32,15 @@ fn get_skyscraper_rules() -> Result<Vec<i32>, String> {
 fn get_skyscraper_grid() -> Vec<i32> {
     let mut buf = String::new();
     let _ = io::stdin().read_to_string(&mut buf);
+
     parse_str_to_i32(&buf)
 }
 
 fn check_rules(skyscraper_rules: &[i32]) -> Result<(), String> {
-    if skyscraper_rules.len() % 4 != 0 {
-        Err("invalid rules".to_string())
-    } else {
+    if skyscraper_rules.len() % 4 == 0 {
         Ok(())
+    } else {
+        Err("invalid rules".to_string())
     }
 }
 
@@ -48,6 +51,7 @@ fn get_skyscraper_line(
     skyscraper_grid: &[i32],
 ) -> Vec<i32> {
     let mut skyscraper_line = vec![];
+
     match direction {
         Direction::Up => {
             for (i, skyscraper) in skyscraper_grid.iter().enumerate() {
@@ -177,8 +181,11 @@ fn check_grid(skyscraper_rules: &[i32], skyscraper_grid: &[i32]) -> Result<(), S
 
 fn main() -> Result<(), String> {
     let skyscraper_rules = get_skyscraper_rules()?;
+
     check_rules(&skyscraper_rules)?;
+
     let skyscraper_grid = get_skyscraper_grid();
+
     check_grid(&skyscraper_rules, &skyscraper_grid)?;
     Ok(())
 }
