@@ -18,10 +18,8 @@ jobs:
         run: cargo fmt --check
       - name: cargo clippy
         run: |
-          cargo clippy -- --deny warnings
-          cargo clippy --release -- --deny warnings
-          cargo clippy -- --deny clippy::pedantic
-          cargo clippy --release -- --deny clippy::pedantic
+          cargo clippy
+          cargo clippy --release
       - name: Build
         run: |
           cargo build

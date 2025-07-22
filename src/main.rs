@@ -37,7 +37,7 @@ fn get_skyscraper_grid() -> Vec<i32> {
 }
 
 fn check_rules(skyscraper_rules: &[i32]) -> Result<(), String> {
-    if skyscraper_rules.len() % 4 == 0 {
+    if skyscraper_rules.len().is_multiple_of(4) {
         Ok(())
     } else {
         Err("invalid rules".to_string())
