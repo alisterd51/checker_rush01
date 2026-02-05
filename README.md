@@ -1,5 +1,7 @@
 # Checker rush01
 
+[![Nightly](https://github.com/alisterd51/checker_rush01/actions/workflows/nightly.yaml/badge.svg)](https://github.com/alisterd51/checker_rush01/actions/workflows/nightly.yaml)
+
 ```bash
 wget https://github.com/alisterd51/checker_rush01/releases/download/v1.0.3/checker_rush01
 chmod +x ./checker_rush01
