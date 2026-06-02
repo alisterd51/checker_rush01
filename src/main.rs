@@ -196,34 +196,25 @@ mod tests {
 
     #[test]
     fn test_parse_str_to_i32() {
-        assert_eq!(parse_str_to_i32(&String::from("1 2 3")), vec![1, 2, 3]);
-        assert_eq!(parse_str_to_i32(&String::from("")), vec![]);
+        assert_eq!(parse_str_to_i32("1 2 3"), vec![1, 2, 3]);
+        assert_eq!(parse_str_to_i32(""), vec![]);
     }
 
     #[test]
     fn test_check_rules() {
-        assert!(check_rules(&vec![1, 1, 1, 1]).is_ok());
-        assert!(check_rules(&vec![2, 1, 1, 2, 2, 1, 1, 2]).is_ok());
+        assert!(check_rules(&[1, 1, 1, 1]).is_ok());
+        assert!(check_rules(&[2, 1, 1, 2, 2, 1, 1, 2]).is_ok());
 
-        assert!(check_rules(&vec![1]).is_err());
-        assert!(check_rules(&vec![1, 2, 3, 4, 5]).is_err());
+        assert!(check_rules(&[1]).is_err());
+        assert!(check_rules(&[1, 2, 3, 4, 5]).is_err());
     }
 
     #[test]
     fn test_get_skyscraper_line_one_square() {
-        assert_eq!(get_skyscraper_line(&Direction::Up, 0, 1, &vec![1]), vec![1]);
-        assert_eq!(
-            get_skyscraper_line(&Direction::Down, 0, 1, &vec![1]),
-            vec![1]
-        );
-        assert_eq!(
-            get_skyscraper_line(&Direction::Left, 0, 1, &vec![1]),
-            vec![1]
-        );
-        assert_eq!(
-            get_skyscraper_line(&Direction::Right, 0, 1, &vec![1]),
-            vec![1]
-        );
+        assert_eq!(get_skyscraper_line(&Direction::Up, 0, 1, &[1]), vec![1]);
+        assert_eq!(get_skyscraper_line(&Direction::Down, 0, 1, &[1]), vec![1]);
+        assert_eq!(get_skyscraper_line(&Direction::Left, 0, 1, &[1]), vec![1]);
+        assert_eq!(get_skyscraper_line(&Direction::Right, 0, 1, &[1]), vec![1]);
     }
 
     #[test]
@@ -267,18 +258,18 @@ mod tests {
 
     #[test]
     fn test_check_line() {
-        assert!(check_line(1, &vec![1]).is_ok());
-        assert!(check_line(2, &vec![1]).is_err());
+        assert!(check_line(1, &[1]).is_ok());
+        assert!(check_line(2, &[1]).is_err());
 
-        assert!(check_line(1, &vec![4, 3, 2, 1]).is_ok());
-        assert!(check_line(2, &vec![3, 4, 2, 1]).is_ok());
-        assert!(check_line(3, &vec![2, 3, 4, 1]).is_ok());
-        assert!(check_line(4, &vec![1, 2, 3, 4]).is_ok());
+        assert!(check_line(1, &[4, 3, 2, 1]).is_ok());
+        assert!(check_line(2, &[3, 4, 2, 1]).is_ok());
+        assert!(check_line(3, &[2, 3, 4, 1]).is_ok());
+        assert!(check_line(4, &[1, 2, 3, 4]).is_ok());
 
-        assert!(check_line(4, &vec![4, 3, 2, 1]).is_err());
-        assert!(check_line(3, &vec![3, 4, 2, 1]).is_err());
-        assert!(check_line(2, &vec![2, 3, 4, 1]).is_err());
-        assert!(check_line(1, &vec![1, 2, 3, 4]).is_err());
+        assert!(check_line(4, &[4, 3, 2, 1]).is_err());
+        assert!(check_line(3, &[3, 4, 2, 1]).is_err());
+        assert!(check_line(2, &[2, 3, 4, 1]).is_err());
+        assert!(check_line(1, &[1, 2, 3, 4]).is_err());
     }
 
     #[test]
