@@ -90,21 +90,16 @@ fn validate_line(skyscraper_line: &[i32]) -> Result<(), String> {
 
     copy_line.dedup();
     if copy_line.len() != skyscraper_line.len() {
-        return Err("Skyscraper line contain duplicate value".to_string());
-    }
-
-    let line_len = i32::try_from(skyscraper_line.len());
-
-    match line_len {
-        Ok(line_len) => {
-            for skyscraper in skyscraper_line {
-                if *skyscraper <= 0 || *skyscraper > line_len {
-                    return Err("Invalid skyscraper value".to_string());
-                }
+        Err("Skyscraper line contain duplicate value".to_string())
+    } else if let Ok(line_len) = i32::try_from(skyscraper_line.len()) {
+        for skyscraper in skyscraper_line {
+            if *skyscraper <= 0 || *skyscraper > line_len {
+                return Err("Invalid skyscraper value".to_string());
             }
-            Ok(())
         }
-        Err(_) => Err("Invalid line size".to_string()),
+        Ok(())
+    } else {
+        Err("Invalid line size".to_string())
     }
 }
 
